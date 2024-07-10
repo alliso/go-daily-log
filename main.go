@@ -1,7 +1,10 @@
+/*
+Copyright © 2024 NAME HERE <EMAIL ADDRESS>
+*/
 package main
 
-import "fmt"
+import "go-daily-log/cmd"
 
 func main() {
-	fmt.Println("Hello Fer!")
+	cmd.Execute()
 }

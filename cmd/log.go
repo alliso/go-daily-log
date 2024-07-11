@@ -43,6 +43,7 @@ to quickly create a Cobra application.`,
 			Date:    date,
 			Project: "test",
 			Task:    "test",
+			Hours:   1,
 		})
 	},
 }

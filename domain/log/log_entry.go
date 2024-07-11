@@ -6,5 +6,5 @@ type Entry struct {
 	Date    time.Time
 	Project string
 	Task    string
-	Hours   int
+	Hours   float64
 }

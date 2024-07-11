@@ -5,6 +5,8 @@ package cmd
 
 import (
 	"go-daily-log/application"
+	"go-daily-log/cmd/bubble"
+	"go-daily-log/cmd/bubble/text"
 	log2 "go-daily-log/domain/log"
 	"log"
 	"time"
@@ -39,11 +41,14 @@ to quickly create a Cobra application.`,
 			}
 		}
 
+		project := bubble.GetProject()
+		task := text.GetTask()
+		hours := text.GetHours()
 		application.LogDay(log2.Entry{
 			Date:    date,
-			Project: "test",
-			Task:    "test",
-			Hours:   1,
+			Project: project,
+			Task:    task,
+			Hours:   hours,
 		})
 	},
 }

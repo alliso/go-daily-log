@@ -7,5 +7,5 @@ import (
 )
 
 func LogDay(logEntry log.Entry) {
-	fmt.Println(logEntry.Date.Format(time.DateOnly), logEntry.Project, logEntry.Task)
+	fmt.Println(logEntry.Date.Format(time.DateOnly), logEntry.Project, logEntry.Task, logEntry.Hours)
 }

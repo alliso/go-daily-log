@@ -18,7 +18,7 @@ func NewEntryRepositoryImpl() *EntryRepositoryImpl {
 func (e *EntryRepositoryImpl) Save(entry log.Entry) {
 
 	sql := `INSERT INTO log_entries(task, date, project, hours) 
-			VALUES (?,?,?,?)`
+			VALUES (?,DATE(?),?,?)`
 
 	if _, err := e.db.Exec(sql, entry.Task, entry.Date, entry.Project, entry.Hours); err != nil {
 		panic(err)
@@ -27,7 +27,7 @@ func (e *EntryRepositoryImpl) Save(entry log.Entry) {
 
 func (e *EntryRepositoryImpl) FindByDay(date time.Time) []log.Entry {
 
-	sql := `SELECT * FROM log_entries WHERE date = ?`
+	sql := `SELECT * FROM log_entries WHERE date = DATE(?)`
 
 	var entries []log.Entry
 

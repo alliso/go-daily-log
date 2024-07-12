@@ -7,6 +7,7 @@ import (
 	"go-daily-log/application"
 	"go-daily-log/cmd/bubble"
 	"go-daily-log/cmd/bubble/text"
+	"go-daily-log/cmd/helpers"
 	log2 "go-daily-log/domain/log"
 	"log"
 	"time"
@@ -30,15 +31,11 @@ to quickly create a Cobra application.`,
 		}
 		strDate := args[0]
 		var date time.Time
-		var err error
 		switch {
 		case strDate == "today":
 			date = time.Now()
 		default:
-			date, err = time.Parse(time.DateOnly, strDate)
-			if err != nil {
-				log.Fatal("Unable to parse date")
-			}
+			date = helpers.ParseDate(strDate)
 		}
 
 		project := bubble.GetProject()

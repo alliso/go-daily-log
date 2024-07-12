@@ -4,14 +4,15 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"github.com/rodaine/table"
-	"github.com/spf13/cobra"
 	"go-daily-log/application"
 	"go-daily-log/cmd/helpers"
 	"go-daily-log/domain/log"
 	log2 "log"
 	"strconv"
 	"time"
+
+	"github.com/rodaine/table"
+	"github.com/spf13/cobra"
 )
 
 // showCmd represents the show command
@@ -73,7 +74,7 @@ to quickly create a Cobra application.`,
 			log2.Fatal("You must specify only a year and a month to show")
 		}
 		var entries []log.Entry
-		entries = application.ShowMonth(getYearAndMonth(args[0], args[1]))
+		entries = application.ShowMonth().Apply(getYearAndMonth(args[0], args[1]))
 
 		printTable(entries)
 	},

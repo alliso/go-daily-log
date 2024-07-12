@@ -44,7 +44,7 @@ to quickly create a Cobra application.`,
 		project := bubble.GetProject()
 		task := text.GetTask()
 		hours := text.GetHours()
-		application.LogDay(log2.Entry{
+		application.LogDay().Apply(log2.Entry{
 			Date:    date,
 			Project: project,
 			Task:    task,

@@ -50,9 +50,9 @@ to quickly create a Cobra application.`,
 		var entries []log.Entry
 		switch strDate := args[0]; strDate {
 		case "today":
-			entries = application.ShowDay(time.Now())
+			entries = application.ShowDay().Apply(time.Now())
 		default:
-			entries = application.ShowDay(helpers.ParseDate(strDate))
+			entries = application.ShowDay().Apply(helpers.ParseDate(strDate))
 		}
 
 		printTable(entries)

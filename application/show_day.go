@@ -2,22 +2,21 @@ package application
 
 import (
 	"go-daily-log/domain/log"
+	domain "go-daily-log/domain/repository"
+	infr "go-daily-log/infrastructure/db/sqlite/repository"
 	"time"
 )
 
-func ShowDay(date time.Time) []log.Entry {
-	return []log.Entry{
-		{
-			Date:    time.Now(),
-			Project: "delivery-point",
-			Task:    "Soportar a Mike",
-			Hours:   200,
-		},
-		{
-			Date:    time.Now(),
-			Project: "delivery-point",
-			Task:    "Soportar a Mike todavia mas",
-			Hours:   400,
-		},
+type ShowDayCommand struct {
+	entryRepository domain.EntryRepository
+}
+
+func ShowDay() *ShowDayCommand {
+	return &ShowDayCommand{
+		entryRepository: infr.NewEntryRepositoryImpl(),
 	}
+}
+
+func (s *ShowDayCommand) Apply(date time.Time) []log.Entry {
+	return s.entryRepository.FindByDay(date)
 }

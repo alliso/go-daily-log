@@ -39,14 +39,29 @@ func (e *EntryRepositoryImpl) FindByDay(date time.Time) []log.Entry {
 
 func (e *EntryRepositoryImpl) FindByMonth(year int, month int) []log.Entry {
 
-	sql := `SELECT id, date, project, task, hours FROM log_entries WHERE DATE(date) BETWEEN DATE(?) AND DATE(?)`
+	firstday := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)
+	lastday := time.Date(year, time.Month(month)+1, 0, 0, 0, 0, 0, time.UTC)
 
-	firstday := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC).Format(time.DateOnly)
-	lastday := time.Date(year, time.Month(month)+1, 0, 0, 0, 0, 0, time.UTC).Format(time.DateOnly)
+	return e.findBetweenDates(firstday, lastday)
+}
 
-	fmt.Printf("Querying from day %s to day %s\n", firstday, lastday)
+func (e *EntryRepositoryImpl) GetDaysInclusiveFrom(days int, date time.Time) []log.Entry {
 
-	if rows, err := e.db.Query(sql, firstday, lastday); err != nil {
+	return e.findBetweenDates(date, date.AddDate(0, 0, days))
+}
+
+func (e *EntryRepositoryImpl) findBetweenDates(firstday time.Time, lastday time.Time) []log.Entry {
+	sql := `SELECT id, date, project, task, hours 
+			FROM log_entries 
+			WHERE DATE(date) BETWEEN DATE(?) AND DATE(?) 
+			ORDER BY date ASC`
+
+	firstdaystr := firstday.Format(time.DateOnly)
+	lastdaystr := lastday.Format(time.DateOnly)
+
+	fmt.Printf("Querying from day %s to day %s\n", firstdaystr, lastdaystr)
+
+	if rows, err := e.db.Query(sql, firstdaystr, lastdaystr); err != nil {
 		panic(err)
 	} else {
 		return rowsToEntries(rows)

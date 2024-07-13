@@ -4,7 +4,6 @@ import (
 	"go-daily-log/domain/log"
 	domain "go-daily-log/domain/repository"
 	infr "go-daily-log/infrastructure/db/sqlite/repository"
-	log2 "log"
 )
 
 type ExportMonthCommand struct {
@@ -18,6 +17,5 @@ func ExportMonth() *ExportMonthCommand {
 }
 
 func (e *ExportMonthCommand) Apply(year int, month int) []log.Entry {
-	log2.Println("Export monthly log to csv", year, month)
 	return e.entryRepository.FindByMonth(year, month)
 }

@@ -80,6 +80,30 @@ to quickly create a Cobra application.`,
 	},
 }
 
+// showWeekCmd represents the show day command
+var showWeekCmd = &cobra.Command{
+	Use:   "week",
+	Short: "Show week log",
+	Long: `A longer description that spans multiple lines and likely contains examples
+and usage of using your command. For example:
+
+Cobra is a CLI library for Go that empowers applications.
+This application is a tool to generate the needed files
+to quickly create a Cobra application.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) != 1 {
+			log2.Fatal("You must specify only a week")
+		}
+		if args[0] != "current" {
+			log2.Fatal("Only current week is supported")
+		}
+		var entries []log.Entry
+		entries = application.ShowWeek().Apply(time.Now())
+
+		printTable(entries)
+	},
+}
+
 func getYearAndMonth(strYear string, strMonth string) (int, int) {
 	var err error
 	var year int
@@ -110,6 +134,7 @@ func init() {
 	rootCmd.AddCommand(showCmd)
 	showCmd.AddCommand(showDayCmd)
 	showCmd.AddCommand(showMonthCmd)
+	showCmd.AddCommand(showWeekCmd)
 
 	// Here you will define your flags and configuration settings.
 

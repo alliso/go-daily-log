@@ -47,13 +47,17 @@ to quickly create a Cobra application.`,
 		if len(args) != 1 {
 			log2.Fatal("You must specify only a day to show")
 		}
-		var entries []log.Entry
+
+		var date time.Time
 		switch strDate := args[0]; strDate {
 		case "today":
-			entries = application.ShowDay().Apply(time.Now())
+			date = time.Now()
+		case "last", "ld":
+			date = application.LastDay().Get()
 		default:
-			entries = application.ShowDay().Apply(helpers.ParseDate(strDate))
+			date = helpers.ParseDate(strDate)
 		}
+		entries := application.ShowDay().Apply(date)
 
 		printTable(entries)
 	},

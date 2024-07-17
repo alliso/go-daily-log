@@ -44,6 +44,14 @@ func initDb() {
 				os.Exit(1)
 			}
 		}
+
+		if !tableExists("projects") {
+			_, err = db.Exec("CREATE TABLE `projects` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255) NOT NULL, `description` VARCHAR(255) NULL)")
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+		}
 	}
 }
 

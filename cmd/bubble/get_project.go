@@ -5,6 +5,7 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"go-daily-log/application"
 	"io"
 	"os"
 	"strings"
@@ -103,9 +104,10 @@ func (m modelProject) View() string {
 }
 
 func main() {
-	items := []list.Item{
-		item("delivery-point"),
-		item("dynamic-delivery"),
+	var items []list.Item
+	projects := application.GetProjects().Get()
+	for _, project := range projects {
+		items = append(items, item(project.Name))
 	}
 
 	const defaultWidth = 20

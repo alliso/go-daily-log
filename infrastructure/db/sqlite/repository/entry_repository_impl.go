@@ -68,6 +68,26 @@ func (e *EntryRepositoryImpl) findBetweenDates(firstday time.Time, lastday time.
 	}
 }
 
+func (e *EntryRepositoryImpl) GetLastDay() time.Time {
+
+	sql := `SELECT MAX(date)
+			FROM log_entries
+			WHERE date < CURRENT_DATE`
+
+	var dateStr string
+	if err := e.db.QueryRow(sql).Scan(&dateStr); err != nil {
+		panic(err)
+	} else {
+		date, err := time.Parse("2006-01-02", dateStr)
+
+		if err != nil {
+			panic(err)
+		}
+
+		return date
+	}
+}
+
 func rowsToEntries(rows *sql.Rows) []log.Entry {
 	var entries []log.Entry
 

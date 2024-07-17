@@ -13,4 +13,6 @@ type EntryRepository interface {
 	FindByMonth(year int, month int) []log.Entry
 
 	GetDaysInclusiveFrom(days int, date time.Time) []log.Entry
+
+	GetLastDay() time.Time
 }

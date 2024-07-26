@@ -8,7 +8,6 @@ import (
 	"go-daily-log/cmd/helpers"
 	"go-daily-log/domain/log"
 	log2 "log"
-	"strconv"
 	"time"
 
 	"github.com/rodaine/table"
@@ -78,7 +77,7 @@ to quickly create a Cobra application.`,
 			log2.Fatal("You must specify only a year and a month to show")
 		}
 		var entries []log.Entry
-		entries = application.ShowMonth().Apply(getYearAndMonth(args[0], args[1]))
+		entries = application.ShowMonth().Apply(helpers.GetYearAndMonth(args[0], args[1]))
 
 		printTable(entries)
 	},
@@ -106,19 +105,6 @@ to quickly create a Cobra application.`,
 
 		printTable(entries)
 	},
-}
-
-func getYearAndMonth(strYear string, strMonth string) (int, int) {
-	var err error
-	var year int
-	var month int
-	year, err = strconv.Atoi(strYear)
-	month, err = strconv.Atoi(strMonth)
-	if err != nil {
-		log2.Fatal("Invalid year, month")
-	}
-
-	return year, month
 }
 
 func printTable(entries []log.Entry) {
